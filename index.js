@@ -56,7 +56,7 @@ window.onload = function () {
         minDist = 100
         param1 = 50
         param2 = 50 
-        minRadius = 5
+        minRadius = 1
         maxRadius = 100
         cv.HoughCircles(src, circles, cv.HOUGH_GRADIENT,
                         1, minDist, param1=param1, param2=param2, minRadius=minRadius, maxRadius=maxRadius);
@@ -67,7 +67,7 @@ window.onload = function () {
             let y = circles.data32F[i * 3 + 1];
             let radius = circles.data32F[i * 3 + 2];
             let center = new cv.Point(x, y);
-            cv.circle(dst, center, radius, color);
+            cv.circle(dst, center, radius, color,2);
             document.getElementById('detect').innerHTML = 'Circle Detected';
         }
         cv.imshow('canvasOutput', dst);
