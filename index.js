@@ -46,6 +46,13 @@ window.onload = function () {
         let ksize = new cv.Size(3, 3);
         let anchor = new cv.Point(-1, -1);
         cv.blur(src,src,ksize,anchor) 
+        cv.medianBlur(src,src,3) 
+        // cv.GaussianBlur(src,src,ksize,0)
+
+
+        //  cv.bilateralFilter(src,src, 15, 75, 75)
+        // cv.bilateralFilter(src,9,7.5,75)
+
 
         let circles = new cv.Mat();
 
@@ -54,21 +61,19 @@ window.onload = function () {
         // You can try more different parameters
 
         minDist = 100
-        param1 = 50
-        param2 = 50 
-        minRadius = 1
-        maxRadius = 100
+        param1 = 80
+        param2 = 70
+        minRadius = 0
+        maxRadius = 0
         cv.HoughCircles(src, circles, cv.HOUGH_GRADIENT,
                         1, minDist, param1=param1, param2=param2, minRadius=minRadius, maxRadius=maxRadius);
         // draw circles
-        document.getElementById('detect').innerHTML = '';
         for (let i = 0; i < circles.cols; ++i) {
             let x = circles.data32F[i * 3];
             let y = circles.data32F[i * 3 + 1];
             let radius = circles.data32F[i * 3 + 2];
             let center = new cv.Point(x, y);
             cv.circle(dst, center, radius, color,2);
-            document.getElementById('detect').innerHTML = 'Circle Detected';
         }
         cv.imshow('canvasOutput', dst);
         src.delete();
